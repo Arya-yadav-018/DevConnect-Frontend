@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { addUser } from "../utils/userSlice";
-import Usercard from "./UserCard";
+import Usercard from "./Usercard";
 
 const backendurl = import.meta.env.VITE_BACKEND_URL;
 
