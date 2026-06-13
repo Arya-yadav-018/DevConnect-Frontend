@@ -2,7 +2,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addFeed } from '../utils/feedSlice';
 import axios from 'axios';
-import Usercard from './UserCard';
+import Usercard from './Usercard';
+
 
 const backendurl = import.meta.env.VITE_BACKEND_URL;
 
