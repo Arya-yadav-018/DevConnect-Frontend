@@ -5,7 +5,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 
 const backendurl = import.meta.env.VITE_BACKEND_URL;
-
+console.log("Backend URL:", backendurl);
 const Signup = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);

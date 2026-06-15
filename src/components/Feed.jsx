@@ -66,7 +66,8 @@ const Feed = () => {
 
   const [visibleUser, setVisibleUser] = useState(null);
   const [animState, setAnimState] = useState('enter');
-
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
   // Refs so callbacks always see latest values without stale closures
   const visibleUserRef = useRef(null);
   const isAnimating = useRef(false);
@@ -79,19 +80,19 @@ const Feed = () => {
   };
 
   const getFeed = async () => {
-    if (feed) return;
+   if (page === 1 && feed?.length > 0) return;
     try {
       const res = await axios.get(
-        `${backendurl}/api/connection/feed`,
+        `${backendurl}/api/connection/feed?page=${page}&limit=10`,
         { withCredentials: true }
       );
-      dispatch(addFeed(res.data));
+      dispatch(addFeed(res.data.data));
+      setHasMore(res.data.hasMore);
     } catch (error) {
       console.log("Feed Error:", error);
     }
   };
 
-  useEffect(() => { getFeed(); }, []);
 
   useEffect(() => {
     // feed is null = not loaded yet
@@ -119,6 +120,20 @@ const Feed = () => {
 
     swapCard(nextUser);
   }, [feed]);
+
+  useEffect(() => {
+  if (
+    feed &&
+    feed.length > 0 &&
+    feed.length <= 3
+  ) {
+    setPage((prev) => prev + 1);
+  }
+}, [feed, hasMore]);
+
+useEffect(() => {
+  getFeed();
+}, [page]);
 
   const swapCard = (nextUser) => {
     isAnimating.current = true;
